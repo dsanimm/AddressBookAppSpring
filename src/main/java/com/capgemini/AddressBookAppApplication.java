@@ -14,7 +14,7 @@ public class AddressBookAppApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(AddressBookAppApplication.class, args);
 		log.info("Address Book App Started in {} Environment", context.getEnvironment().getProperty("environment"));
 		log.info("Address Book App Database User is {}",
-				context.getEnvironment().getProperty("spring.datasource.username"));
+			 	context.getEnvironment().getProperty("spring.datasource.username"));
 	}
 
 }
