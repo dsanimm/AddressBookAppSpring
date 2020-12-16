@@ -1,5 +1,6 @@
 package com.capgemini.service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,9 @@ public class AddressBookService implements IAddressBookService {
 		contactData.setFullName(contactDto.fullName);
 		contactData.setPhoneNo(contactDto.phoneNo);
 		contactData.setAddress(contactDto.address);
+		contactData.setCity(contactDto.city);
+		contactData.setState(contactDto.state);
+		contactData.setZip(contactDto.zip);
 		contactList.set(contactId - 1, contactData);
 		return contactData;
 	}
