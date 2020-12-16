@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.dto.ContactDTO;
 import com.capgemini.dto.ResponseDTO;
+import com.capgemini.exceptions.AddressBookException;
 import com.capgemini.model.ContactData;
 import com.capgemini.service.IAddressBookService;
 
@@ -35,7 +36,8 @@ public class AddressBookController {
 	}
 
 	@GetMapping("/get/{contactId}")
-	public ResponseEntity<ResponseDTO> getAddressBookContactById(@PathVariable("contactId") int contactId) {
+	public ResponseEntity<ResponseDTO> getAddressBookContactById(@PathVariable("contactId") int contactId)
+			throws AddressBookException {
 		ContactData contactData = null;
 		contactData = addressBookService.getContactById(contactId);
 		ResponseDTO response = new ResponseDTO("Get Call Successful for Id : " + contactId, contactData);
@@ -52,7 +54,7 @@ public class AddressBookController {
 
 	@PutMapping("/update/{contactId}")
 	public ResponseEntity<ResponseDTO> updateContactInBook(@PathVariable("contactId") int contactId,
-			@RequestBody ContactDTO contactDto) {
+			@RequestBody ContactDTO contactDto) throws AddressBookException {
 		ContactData contactData = null;
 		contactData = addressBookService.updateContactInBookById(contactId, contactDto);
 		ResponseDTO response = new ResponseDTO("Updated Contact Successfully ! contact Id : " + contactId, contactData);
@@ -60,7 +62,8 @@ public class AddressBookController {
 	}
 
 	@DeleteMapping("/delete/{contactId}")
-	public ResponseEntity<ResponseDTO> deleteAddressBookContactById(@PathVariable("contactId") int contactId) {
+	public ResponseEntity<ResponseDTO> deleteAddressBookContactById(@PathVariable("contactId") int contactId)
+			throws AddressBookException {
 		addressBookService.deleteContactInBookById(contactId);
 		ResponseDTO response = new ResponseDTO("Deleted Successfully !",
 				"Deleted id : " + contactId + " Successfully !");
