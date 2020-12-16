@@ -12,34 +12,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.dto.ContactDTO;
+import com.capgemini.dto.ResponseDTO;
+import com.capgemini.model.ContactData;
 
 @RestController
 @RequestMapping("/addressbookservice")
 public class AddressBookController {
 
 	@RequestMapping(value = { "", "/", "/get" })
-	public ResponseEntity<String> getAddressBookContacts() {
-		return new ResponseEntity<String>("Get Call Successful !", HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getAddressBookContacts() {
+		ContactData contactData = null;
+		contactData = new ContactData(1, new ContactDTO("Ram Das", "+91 7878787878", "45/1 Sardar Patel Road"));
+		ResponseDTO response = new ResponseDTO("Get Call Successful !", contactData);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{contactId}")
-	public ResponseEntity<String> getAddressBookContactById(@PathVariable("contactId") int contactId) {
-		return new ResponseEntity<String>("Get Call Successful for Id : " + contactId, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getAddressBookContactById(@PathVariable("contactId") int contactId) {
+		ContactData contactData = null;
+		contactData = new ContactData(1, new ContactDTO("Ram Das", "+91 7878787878", "45/1 Sardar Patel Road"));
+		ResponseDTO response = new ResponseDTO("Get Call Successful for Id : " + contactId, contactData);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<String> addContactInBook(@RequestBody ContactDTO contactDto) {
-		return new ResponseEntity<String>("Created Contact Successfully : " + contactDto, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> addContactInBook(@RequestBody ContactDTO contactDto) {
+		ContactData contactData = null;
+		contactData = new ContactData(1, contactDto);
+		ResponseDTO response = new ResponseDTO("Created Contact Successfully !", contactData);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<String> updateContactInBook(@RequestBody ContactDTO contactDto) {
-		return new ResponseEntity<String>("Updated Contact Successfully : " + contactDto, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> updateContactInBook(@RequestBody ContactDTO contactDto) {
+		ContactData contactData = null;
+		contactData = new ContactData(1, contactDto);
+		ResponseDTO response = new ResponseDTO("Updated Contact Successfully !", contactData);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{contactId}")
-	public ResponseEntity<String> deleteAddressBookContactById(@PathVariable("contactId") int contactId) {
-		return new ResponseEntity<String>("Delete Successful for Id : " + contactId, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> deleteAddressBookContactById(@PathVariable("contactId") int contactId) {
+		ResponseDTO response = new ResponseDTO("Deleted Successfully !",
+				"Deleted id : " + contactId + " Successfully !");
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 }
