@@ -11,37 +11,39 @@ import com.capgemini.model.ContactData;
 @Service
 public class AddressBookService implements IAddressBookService {
 
+	private List<ContactData> contactList = new ArrayList<>();
+
 	@Override
 	public List<ContactData> getAllContacts() {
-		List<ContactData> contactList = new ArrayList<>();
-		contactList.add(new ContactData(1, new ContactDTO("Ram Das", "+91 7878787878", "45/1 Sardar Patel Road")));
 		return contactList;
 	}
 
 	@Override
 	public ContactData getContactById(int contactId) {
-		ContactData contactData = null;
-		contactData = new ContactData(1, new ContactDTO("Ram Das", "+91 7878787878", "45/1 Sardar Patel Road"));
-		return contactData;
+		return contactList.get(contactId - 1);
 	}
 
 	@Override
 	public ContactData addContactInBook(ContactDTO contactDto) {
 		ContactData contactData = null;
-		contactData = new ContactData(1, contactDto);
+		contactData = new ContactData(contactList.size() + 1, contactDto);
+		contactList.add(contactData);
 		return contactData;
 	}
 
 	@Override
 	public ContactData updateContactInBookById(int contactId, ContactDTO contactDto) {
-		ContactData contactData = null;
-		contactData = new ContactData(contactId, contactDto);
+		ContactData contactData = this.getContactById(contactId);
+		contactData.setFullName(contactDto.fullName);
+		contactData.setPhoneNo(contactDto.phoneNo);
+		contactData.setAddress(contactDto.address);
+		contactList.set(contactId - 1, contactData);
 		return contactData;
 	}
 
 	@Override
 	public void deleteContactInBookById(int contactId) {
-		// TODO Auto-generated method stub
+		contactList.remove(contactId - 1);
 	}
 
-} 
+}
